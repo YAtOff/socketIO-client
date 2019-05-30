@@ -239,8 +239,9 @@ class EngineIO(LoggingMixin):
         'Wait in a loop and react to events as defined in the namespaces'
         # Use ping/pong to unblock recv for polling transport
         self._heartbeat_thread.hurry()
+        transport = self._transport
         # Use timeout to unblock recv for websocket transport
-        self._transport.set_timeout(seconds=1)
+        transport.set_timeout(seconds=1)
         # Listen
         warning_screen = self._yield_warning_screen(seconds)
         for elapsed_time in warning_screen:
@@ -267,7 +268,7 @@ class EngineIO(LoggingMixin):
                 except PacketError:
                     pass
         self._heartbeat_thread.relax()
-        self._transport.set_timeout()
+        transport.set_timeout()
 
     def _should_stop_waiting(self):
         return self._wants_to_close
