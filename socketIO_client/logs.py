@@ -1,6 +1,23 @@
 import logging
+
+try:
+    from logging import NullHandler
+except ImportError:  # Python 2.6
+    from logging import Handler
+
+    class NullHandler(Handler):
+        def emit(self, record):
+            pass
+finally:
+    from logging import getLogger
+
 import time
-from invisibleroads_macros.log import get_log
+
+
+def get_log(name):
+    log = getLogger(name)
+    log.addHandler(NullHandler())
+    return log
 
 
 L = get_log('socketIO-client')

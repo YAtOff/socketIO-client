@@ -1,7 +1,7 @@
-from invisibleroads_macros.log import get_log
 from threading import Thread, Event
 
 from .exceptions import ConnectionError, TimeoutError
+from .logs import get_log
 
 
 L = get_log(__name__)
